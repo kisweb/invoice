@@ -21,8 +21,8 @@ datasource db {
   model Invoice {
     id            String        @id
     name          String
-    issuerName    String        @default("")
-    issuerAddress String        @default("")
+    issuerName    String        @default("Ibrahima sarr")
+    issuerAddress String        @default("Manguiline Plateau, Bignona - 775544191")
     clientName    String        @default("")
     clientAddress String        @default("")
     invoiceDate   String        @default("")
