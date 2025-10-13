@@ -9,18 +9,18 @@ import confetti from "canvas-confetti"
 import { Invoice } from "@/type";
 import InvoiceComponent from "./components/InvoiceComponent";
 
-
-
 export default function Home() {
   const { user } = useUser()
   const [invoiceName, setInvoiceName] = useState("")
+  const [clientName, setClientName] = useState("")
+  const [clientAddress, setClientAddress] = useState("")
   const [isNameValid, setIsNameValid] = useState(true)
   const email = user?.primaryEmailAddress?.emailAddress as string
   const [invoices, setInvoices] = useState<Invoice[]>([]);
 
   const fetchInvoices = async () => {
     try {
-      const data = await getInvoicesByEmail(email)
+      const data = await getInvoicesByEmail('kisarrweb@gmail.com')
       if (data) {
         setInvoices(data)
       }
@@ -34,13 +34,13 @@ export default function Home() {
   }, [email])
 
   useEffect(() => {
-    setIsNameValid(invoiceName.length <= 60)
+    setIsNameValid(clientName.length <= 30)
   }, [invoiceName])
 
   const handleCreateInvoice = async () => {
     try {
       if (email) {
-        await createEmptyInvoice(email, invoiceName)
+        await createEmptyInvoice(email, clientName, clientAddress)
       }
       fetchInvoices()
       setInvoiceName("")
@@ -96,17 +96,25 @@ export default function Home() {
 
             <input
               type="text"
-              placeholder="Nom de la facture (max 60 caractères)"
+              placeholder="Prénoms et nom du client (max 30 caractères)"
               className="input input-bordered w-full my-4"
-              value={invoiceName}
-              onChange={(e) => setInvoiceName(e.target.value)}
+              value={clientName}
+              onChange={(e) => setClientName(e.target.value)}
             />
 
-            {!isNameValid && <p className="mb-4 text-sm">Le nom ne peut pas dépasser 60 caractères.</p>}
+            <input
+              type="text"
+              placeholder="Téléphone ou Adresse du client (max 30 caractères)"
+              className="input input-bordered w-full my-4"
+              value={clientAddress}
+              onChange={(e) => setClientAddress(e.target.value)}
+            />
+
+            {!isNameValid && <p className="mb-4 text-sm">Le nom complet ne peut pas dépasser 30 caractères.</p>}
 
             <button
               className="btn btn-accent"
-              disabled={!isNameValid || invoiceName.length === 0}
+              disabled={!isNameValid || clientName.length === 0}
               onClick={handleCreateInvoice}
             >
               Créer

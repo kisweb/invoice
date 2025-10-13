@@ -4,6 +4,7 @@ import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { ArrowDownFromLine, SatelliteDish } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useRef } from "react";
 
 interface FacturePDFProps {
@@ -65,7 +66,6 @@ const InvoicePDF: React.FC<FacturePDFProps> = ({ invoice, totals }) => {
           Facture PDF
           <ArrowDownFromLine className="w-4" />
         </button>
-
         <div className="p-8" ref={factureRef}>
           <div className="flex justify-between items-center text-sm">
             <div className="flex flex-col border-1 rounded-xl p-2">
@@ -84,17 +84,19 @@ const InvoicePDF: React.FC<FacturePDFProps> = ({ invoice, totals }) => {
                   <div className="absolute top-[0] left-[70%] bg-transparent text-orange-500  rounded-3xl p-1">
                     <SatelliteDish className="h-8 w-8" />
                   </div>
-                  <hr className="border-b-2 border-orange-500 w-[160px]"/>
+                  <hr className="border-b-2 border-orange-500 w-[160px]" />
                   <span className="text-md font-light">
                     <p className="mt-1">sarrsindian@gmail.com</p>
                     <span className="mt-0">77 554 41 91</span>
                   </span>
                 </div>
               </div>
-              <h1 className="text-4xl mt-4 font-bold">Facture</h1>
+              {/* <h1 className="text-4xl mt-4 font-bold">Facture</h1> */}
             </div>
             <div className="text-right">
-              <p className="badge badge-info mb-2 px-2 py-4 text-pretty font-bold ">Facture n° : {invoice.id}</p>
+              <p className="badge badge-info mb-2 px-2 py-4 text-pretty font-bold ">
+                Facture n° : {invoice.id}
+              </p>
               <p className="my-2">
                 <strong>Date </strong>
                 {formatDate(invoice.invoiceDate)}
@@ -106,7 +108,7 @@ const InvoicePDF: React.FC<FacturePDFProps> = ({ invoice, totals }) => {
             </div>
           </div>
 
-          <div className="my-6 flex justify-between">
+          {/* <div className="my-6 flex justify-between">
             <div>
               <p className="badge badge-ghost mb-2">Émetteur</p>
               <p className="text-sm font-bold italic">{invoice.issuerName}</p>
@@ -121,7 +123,7 @@ const InvoicePDF: React.FC<FacturePDFProps> = ({ invoice, totals }) => {
                 {invoice.clientAddress}
               </p>
             </div>
-          </div>
+          </div> */}
 
           <div className="overflow-x-auto">
             <table className="table table-zebra">
@@ -140,8 +142,8 @@ const InvoicePDF: React.FC<FacturePDFProps> = ({ invoice, totals }) => {
                     <td>{index + 1}</td>
                     <td>{ligne.description}</td>
                     <td>{ligne.quantity}</td>
-                    <td>{ligne.unitPrice.toFixed(2)} xof</td>
-                    <td>{(ligne.quantity * ligne.unitPrice).toFixed(2)} xof</td>
+                    <td>{ligne.unitPrice.toFixed(0)} xof</td>
+                    <td>{(ligne.quantity * ligne.unitPrice).toFixed(0)} xof</td>
                   </tr>
                 ))}
               </tbody>
@@ -149,22 +151,22 @@ const InvoicePDF: React.FC<FacturePDFProps> = ({ invoice, totals }) => {
           </div>
 
           <div className="mt-6 space-y-2 text-md">
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
               <div className="font-bold">Total Hors Taxes</div>
-              <div>{totals.totalHT.toFixed(2)} xof</div>
-            </div>
+              <div>{totals.totalHT.toFixed(0)} xof</div>
+            </div> */}
 
-            {invoice.vatActive && (
+            {/* {invoice.vatActive && (
               <div className="flex justify-between">
                 <div className="font-bold">TVA {invoice.vatRate} %</div>
-                <div>{totals.totalVAT.toFixed(2)} xof</div>
+                <div>{totals.totalVAT.toFixed(0)} xof</div>
               </div>
-            )}
+            )} */}
 
             <div className="flex justify-between">
-              <div className="font-bold">Total Toutes Taxes Comprises</div>
-              <div className="badge badge-accent">
-                {totals.totalTTC.toFixed(2)} xof
+              <div className="font-bold">Total à payer</div>
+              <div className="badge bg-black px-4 py-1">
+                <p className="badge badge-white mb-1 p-2 text-pretty font-bold">{totals.totalTTC.toFixed(0)} xof</p>
               </div>
             </div>
           </div>

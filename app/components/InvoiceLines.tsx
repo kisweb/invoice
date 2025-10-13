@@ -97,12 +97,12 @@ const InvoiceLines: React.FC<Props> = ({ invoice, setInvoice }) => {
                                         value={line.unitPrice}
                                         className='input input-sm input-bordered w-full'
                                         min={0}
-                                        step={0.01}
+                                        step={25}
                                         onChange={(e) => handleUnitPriceChange(index, e.target.value)}
                                     />
                                 </td>
                                 <td className='font-bold'>
-                                    {(line.quantity * line.unitPrice).toFixed(2)}xof
+                                    {(line.quantity * line.unitPrice).toFixed(0)} xof
                                 </td>
                                 <td>
                                     <button
