@@ -37,10 +37,7 @@ const InvoicePDF: React.FC<FacturePDFProps> = ({ invoice, totals }) => {
           format: "A4",
         });
 
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
         pdf.save(`facture-${invoice.id}-${invoice.name}.pdf`);
 
         confetti({
@@ -153,13 +150,6 @@ const InvoicePDF: React.FC<FacturePDFProps> = ({ invoice, totals }) => {
               <div className="font-bold">Total Hors Taxes</div>
               <div>{totals.totalHT.toFixed(2)} xof</div>
             </div>
-
-            {invoice.vatActive && (
-              <div className="flex justify-between">
-                <div className="font-bold">TVA {invoice.vatRate} %</div>
-                <div>{totals.totalVAT.toFixed(2)} xof</div>
-              </div>
-            )}
 
             <div className="flex justify-between">
               <div className="font-bold">Total Toutes Taxes Comprises</div>
