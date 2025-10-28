@@ -37,10 +37,10 @@ const InvoicePDF: React.FC<FacturePDFProps> = ({ invoice, totals }) => {
           format: "A4",
         });
 
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        // const pdfWidth = pdf.internal.pageSize.getWidth();
+        // const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
         pdf.save(`facture-${invoice.id}-${invoice.name}.pdf`);
 
         confetti({
